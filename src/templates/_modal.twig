@@ -1,0 +1,58 @@
+<div id="related-modal" class="modal elementselectormodal">
+    <div id="modal" class="body">
+        <header class="header">
+            <h3>Related</h3>
+        </header>
+        <div class="content">
+            {% if relations|length %}
+                <div class="main">
+                    <table class="data fullwidth collapsible">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th data-attribute="link" data-icon="world" title="Link"></th>
+                        </tr>
+                        </thead>
+                        {% for item in relations %}
+                            <tr>
+                                <td>
+                                    {% set title = item.title ?? item.username ?? null %}
+                                    {% set status = item.enabled ? 'enabled' : 'dist' %}
+                                    <div class="element small hasstatus"
+                                         data-status="{{ status }}"
+                                         data-label="{{ title }}">
+                                        <span class="status {{ status }} "></span>
+                                        <div class="label">
+                                            <span class="title">{{ title }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if item.section %}
+                                        <a href="/admin/entries/{{ item.section.handle }}" rel="noopener" target="_blank">{{ item.section }}</a>
+                                    {% else %}
+                                        Unknown
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if item.cpEditUrl %}
+                                        <a href="{{ item.cpEditUrl }}" rel="noopener" target="_blank" data-icon="world"
+                                           title="Visit webpage"></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <p class="light h-text--bold">No relations found</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="footer">
+        <div class="buttons right">
+            <div class="btn" tabindex="0">Cancel</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+{
+    "name": "wrav/related",
+    "description": "A simple plugin that adds a widget within the Craft CP page sidebar, allowing you to quickly and easily access related entries.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "related"
+    ],
+    "support": {
+        "docs": "https://github.com/wrav/related/blob/master/README.md",
+        "issues": "https://github.com/wrav/related/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "reganlawton",
+            "homepage": "https://github.com/reganlawton"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "wrav\\related\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Related",
+        "handle": "related",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/wrav/related/master/CHANGELOG.md",
+        "components": {
+            "relatedService": "wrav\\related\\services\\RelatedService"
+        },
+        "class": "wrav\\related\\Related"
+    }
+}

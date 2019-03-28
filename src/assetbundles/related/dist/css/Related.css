@@ -1,0 +1,30 @@
+/**
+ * Related plugin for Craft CMS
+ *
+ * Related CSS
+ *
+ * @author    reganlawton
+ * @copyright Copyright (c) 2019 reganlawton
+ * @link      https://github.com/reganlawton
+ * @package   Related
+ * @since     1.0.0
+ */
+
+#nav #nav-related {
+    display: none;
+}
+
+#settings-allowedSections {
+    min-height: 100px;
+    min-width: 250px;
+}
+
+#related-modal {
+    margin-bottom: 0;
+}
+
+#related-modal header {
+    margin-bottom: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

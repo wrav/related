@@ -1,0 +1,25 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Related plugin for Craft CMS 3.x
+ *
+ * Related Settings.twig
+ *
+ * @author    reganlawton
+ * @copyright Copyright (c) 2019 reganlawton
+ * @link      https://github.com/reganlawton
+ * @package   Related
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.multiselectField({
+    label: "Allowed Sections"|t,
+    instructions: "Choose which sections the relation widget will show on. Leave blank for all sections"|t,
+    id: 'allowedSections',
+    name: 'allowedSections',
+    values: settings['allowedSections'],
+    options: optionsSections,
+}) }}
