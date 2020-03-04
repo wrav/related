@@ -12,6 +12,7 @@ namespace wrav\related\services;
 
 use craft\base\Element;
 use craft\db\Query;
+use craft\elements\MatrixBlock;
 use wrav\related\Related;
 
 use Craft;
@@ -49,10 +50,30 @@ class RelatedService extends Component
         /** @var Element $elementType */
         $elementType = Craft::$app->elements->getElementTypeById($elementId);
 
+        $query = MatrixBlock::find();
+        $query->relatedTo = $element;
+        $query->anyStatus();
+        /** @var MatrixBlock[] $blocks */
+        $blocks = $query->all();
+
+        $matchingBlocks = [];
+        foreach ($blocks as $block) {
+            $owner = $block->getOwner();
+            if($owner) {
+                $matchingBlocks[$owner->id] = $owner;
+            }
+        }
+
         /** @var Query $query */
         $query = $elementType::find();
         $query->relatedTo = $element;
         $query->anyStatus();
-        return $query->all();
+        /** @var Element[] $blocks */
+        $elements = $query->all();
+
+        return array_merge(
+            $matchingBlocks,
+            $elements,
+        );
     }
 }

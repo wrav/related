@@ -28,6 +28,10 @@ if (id != null) {
         resizable: true,
       });
 
+      // Remove previous list in sidebar to fix bug in CraftCMS v3.4
+      $('#related-widget').remove();
+
+      // Add link to sidebar
       $("#settings").append(
         '<div id="related-widget" class="field" style="margin-top: 50px">' +
         '<div class="heading">' +

@@ -91,7 +91,7 @@ class Related extends Plugin
             View::class,
             View::EVENT_END_PAGE,
             function(Event $event) {
-                if (Craft::$app->getRequest()->getIsCpRequest()) {
+                if (Craft::$app->getRequest()->getIsCpRequest() && preg_match('/^\/.+\/entries\//', Craft::$app->getRequest()->getUrl())) {
                     $url = Craft::$app->assetManager->getPublishedUrl('@wrav/related/assetbundles/related/dist/js/Related.js', true);
                     echo "<script src='$url'></script>";
 
