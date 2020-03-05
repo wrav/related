@@ -73,7 +73,7 @@ class RelatedService extends Component
 
         return array_merge(
             $matchingBlocks,
-            $elements,
+            $elements
         );
     }
 }
