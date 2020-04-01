@@ -21,6 +21,7 @@
 
 #related-modal {
     margin-bottom: 0;
+    display: none;
 }
 
 #related-modal header {
