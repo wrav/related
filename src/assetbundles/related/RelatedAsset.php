@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2019 reganlawton
  */
 
-namespace wrav\related\assetbundles\Related;
+namespace wrav\related\assetbundles\related;
 
 use Craft;
 use craft\web\AssetBundle;

@@ -1,5 +1,9 @@
 # Related Changelog
 
+## 1.1.3 - 2020-04-02
+### Fixed
+- Composer deprecation notice ([#4](https://github.com/wrav/related/issues/4)).
+
 ## 1.1.2 - 2020-04-02
 ### Fixed
 - Set the model as hidden till opened ([#5](https://github.com/wrav/related/issues/5)).
