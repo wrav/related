@@ -1,5 +1,9 @@
 # Related Changelog
 
+## 1.1.4 - 2020-09-02
+### Updated
+- Updated to support latest CraftCMS release.
+
 ## 1.1.3 - 2020-04-02
 ### Fixed
 - Composer deprecation notice ([#4](https://github.com/wrav/related/issues/4)).

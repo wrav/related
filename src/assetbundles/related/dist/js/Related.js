@@ -9,7 +9,7 @@
  * @package   Related
  * @since     1.0.0
  */
-var id = $("input[name='entryId']").val();
+var id = $("input[name='entryId'],input[name='sourceId']").val();
 var sectionId = $("input[name='sectionId']").val();
 
 if (id != null) {
