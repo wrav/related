@@ -1,6 +1,7 @@
 # Related Changelog
 
-## 1.1.5 - 2020-09-02
+## 1.1.5 - 2020-03-23
+
 ### Added
 - Added support for Categories and Users, allowing both viewing their relations and returning them in other relations.
 
