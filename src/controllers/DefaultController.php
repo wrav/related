@@ -61,8 +61,20 @@ class DefaultController extends Controller
     {
         $data = Craft::$app->request->getQueryParams();
         $allowedSections = Related::getInstance()->getSettings()->allowedSections;
+        $allowedCategories = Related::getInstance()->getSettings()->allowedCategories;
+        $shouldFetch = false;
 
-        if (!$allowedSections || (is_array($allowedSections) && in_array($data['sectionId'], $allowedSections))) {
+        if (!empty($data['sectionId']) && (!$allowedSections || (is_array($allowedSections) && in_array($data['sectionId'], $allowedSections)))) {
+            $shouldFetch = true;
+        }
+        if (!empty($data['userId'])) {
+            $shouldFetch = true;
+        }
+        if (!empty($data['categoryId']) && (!$allowedCategories || (is_array($allowedCategories) && in_array($data['categoryId'], $allowedCategories)))) {
+            $shouldFetch = true;
+        }
+
+        if ($shouldFetch) {
             $elementId = $data['id'];
             $relations = Related::$plugin->relatedService->getRelated($elementId);
 

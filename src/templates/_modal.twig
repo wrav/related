@@ -15,29 +15,33 @@
                         </tr>
                         </thead>
                         {% for item in relations %}
+                            {% set title = item.title ?? item.name ?? item.username ?? null %}
+                            {% set status = item.enabled ? 'enabled' : 'dist' %}
+                            {% set cpEditUrl = item.cpEditUrl ?? '#' %}
+
                             <tr>
                                 <td>
-                                    {% set title = item.title ?? item.username ?? null %}
-                                    {% set status = item.enabled ? 'enabled' : 'dist' %}
-                                    <div class="element small hasstatus"
-                                         data-status="{{ status }}"
-                                         data-label="{{ title }}">
-                                        <span class="status {{ status }} "></span>
+                                    <div class="element hasstatus" data-type="craft\elements\{{ item.formName }}" data-id="{{ item.id }}" data-site-id="{{ item.siteId }}" data-status="{{ status }}" data-label="{{ title }}" data-url="{{ cpEditUrl }}" title="{{ title }}">
+                                        <span class="status {{ status }}"></span>
                                         <div class="label">
-                                            <span class="title">{{ title }}</span>
+                                            <span class="title"><a href="{{ cpEditUrl }}" rel="noopener" target="_blank" >{{ title }}</a></span>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    {% if item.section %}
+                                    {% if item.refHandle == 'entry' and item.section %}
                                         <a href="/admin/entries/{{ item.section.handle }}" rel="noopener" target="_blank">{{ item.section }}</a>
+                                    {% elseif item.refHandle == 'category' and item.group %}
+                                        <a href="/admin/categories/{{ item.group.handle }}" rel="noopener" target="_blank">{{ item.group }}</a>
+                                    {% elseif item.refHandle == 'user' %}
+                                        <a href="/admin/users" rel="noopener" target="_blank">{{ item.displayName }}</a>
                                     {% else %}
                                         Unknown
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if item.cpEditUrl %}
-                                        <a href="{{ item.cpEditUrl }}" rel="noopener" target="_blank" data-icon="world"
+                                    {% if cpEditUrl %}
+                                        <a href="{{ cpEditUrl }}" rel="noopener" target="_blank" data-icon="world"
                                            title="Visit webpage"></a>
                                     {% endif %}
                                 </td>

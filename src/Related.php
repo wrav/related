@@ -91,7 +91,14 @@ class Related extends Plugin
             View::class,
             View::EVENT_END_PAGE,
             function(Event $event) {
-                if (Craft::$app->getRequest()->getIsCpRequest() && preg_match('/^\/.+\/entries\//', Craft::$app->getRequest()->getUrl())) {
+                if (Craft::$app->getRequest()->getIsCpRequest()
+                    && (
+                        preg_match('/^\/.+\/entries\//', Craft::$app->getRequest()->getUrl())
+                        || preg_match('/^\/.+\/categories\//', Craft::$app->getRequest()->getUrl())
+                        || preg_match('/^\/.+\/users\//', Craft::$app->getRequest()->getUrl())
+                        || preg_match('/^\/.+\/myaccount/', Craft::$app->getRequest()->getUrl())
+                    )
+                ) {
                     $url = Craft::$app->assetManager->getPublishedUrl('@wrav/related/assetbundles/related/dist/js/Related.js', true);
                     echo "<script src='$url'></script>";
 
@@ -126,10 +133,16 @@ class Related extends Plugin
     protected function settingsHtml(): string
     {
         $sections = Craft::$app->sections->getAllSections('id');
+        $categories = Craft::$app->categories->getAllGroups('id');
         $optionsSections = [];
+        $optionsCategories = [];
 
         foreach ($sections as $id => $section) {
             $optionsSections[$section->id] = $section->name;
+        }
+
+        foreach ($categories as $id => $category) {
+            $optionsCategories[$category->id] = $category->name;
         }
 
         return Craft::$app->view->renderTemplate(
@@ -137,6 +150,7 @@ class Related extends Plugin
             [
                 'settings' => $this->getSettings(),
                 'optionsSections' => $optionsSections,
+                'optionsCategories' => $optionsCategories,
             ]
         );
     }

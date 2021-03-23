@@ -12,6 +12,9 @@ namespace wrav\related\services;
 
 use craft\base\Element;
 use craft\db\Query;
+use craft\elements\Category;
+use craft\elements\Entry;
+use craft\elements\User;
 use craft\elements\MatrixBlock;
 use wrav\related\Related;
 
@@ -65,11 +68,31 @@ class RelatedService extends Component
         }
 
         /** @var Query $query */
-        $query = $elementType::find();
+        $query = Entry::find();
         $query->relatedTo = $element;
         $query->anyStatus();
-        /** @var Element[] $blocks */
-        $elements = $query->all();
+        /** @var Element[] $entries */
+        $entries = $query->all();
+
+        /** @var Query $query */
+        $query = Category::find();
+        $query->relatedTo = $element;
+        $query->anyStatus();
+        /** @var Element[] $categories */
+        $categories = $query->all();
+
+        /** @var Query $query */
+        $query = User::find();
+        $query->relatedTo = $element;
+        $query->anyStatus();
+        /** @var Element[] $users */
+        $users = $query->all();
+
+        $elements = array_merge(
+            $entries,
+            $categories,
+            $users,
+        );
 
         return array_merge(
             $matchingBlocks,
