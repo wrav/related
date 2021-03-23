@@ -1,5 +1,12 @@
 # Related Changelog
 
+## 1.1.5 - 2020-09-02
+### Added
+- Added support for Categories and Users, allowing both viewing their relations and returning them in other relations.
+
+### Updated
+- Updated HTML layout and support more usable linking in the relation table.
+
 ## 1.1.4 - 2020-09-02
 ### Updated
 - Updated to support latest CraftCMS release.

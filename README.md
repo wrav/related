@@ -1,6 +1,6 @@
 # Related plugin for Craft CMS 3.x
 
-A simple plugin that adds a widget within the Craft CP page sidebar, allowing you to quickly and easily access related entries.
+A simple plugin that adds a widget within the Craft CP page sidebar, allowing you to quickly and easily access and manage related entries, categories and users.
 
 ![Screenshot](resources/img/modal.png)
 

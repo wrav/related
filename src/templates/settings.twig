@@ -23,3 +23,12 @@
     values: settings['allowedSections'],
     options: optionsSections,
 }) }}
+
+{{ forms.multiselectField({
+    label: "Allowed Categories"|t,
+    instructions: "Choose which categories the relation widget will show on. Leave blank for all categories"|t,
+    id: 'allowedCategories',
+    name: 'allowedCategories',
+    values: settings['allowedCategories'],
+    options: optionsCategories,
+}) }}

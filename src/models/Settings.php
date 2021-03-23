@@ -39,4 +39,9 @@ class Settings extends Model
      */
     public $allowedSections;
 
+    /**
+     * @var string
+     */
+    public $allowedCategories;
+
 }
