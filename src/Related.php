@@ -132,17 +132,17 @@ class Related extends Plugin
 
     protected function settingsHtml(): string
     {
-        $sections = Craft::$app->sections->getAllSections('id');
-        $categories = Craft::$app->categories->getAllGroups('id');
+        $sections = Craft::$app->sections->getAllSections();
+        $categories = Craft::$app->categories->getAllGroups();
         $optionsSections = [];
         $optionsCategories = [];
 
         foreach ($sections as $id => $section) {
-            $optionsSections[$section->id] = $section->name;
+            $optionsSections[$section->handle] = $section->name;
         }
 
         foreach ($categories as $id => $category) {
-            $optionsCategories[$category->id] = $category->name;
+            $optionsCategories[$category->handle] = $category->name;
         }
 
         return Craft::$app->view->renderTemplate(
