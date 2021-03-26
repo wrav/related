@@ -64,14 +64,36 @@ class DefaultController extends Controller
         $allowedCategories = Related::getInstance()->getSettings()->allowedCategories;
         $shouldFetch = false;
 
-        if (!empty($data['sectionId']) && (!$allowedSections || (is_array($allowedSections) && in_array($data['sectionId'], $allowedSections)))) {
-            $shouldFetch = true;
+        if (!empty($data['sectionId'])) {
+            if (!$allowedSections) {
+                $shouldFetch = true;
+            } else if (is_array($allowedSections)) {
+                try {
+                    $sectionHandle = Craft::$app->getSections()->getSectionById($data['sectionId'])->handle;
+                } catch (\Throwable $exception) {
+                    $sectionHandle = '';
+                }
+                if (in_array($sectionHandle, $allowedSections)) {
+                    $shouldFetch = true;
+                }
+            }
         }
         if (!empty($data['userId'])) {
             $shouldFetch = true;
         }
-        if (!empty($data['categoryId']) && (!$allowedCategories || (is_array($allowedCategories) && in_array($data['categoryId'], $allowedCategories)))) {
-            $shouldFetch = true;
+        if (!empty($data['categoryId'])) {
+            if (!$allowedCategories) {
+                $shouldFetch = true;
+            } else if (is_array($allowedCategories)) {
+                try {
+                    $categoryHandle = Craft::$app->getCategories()->getGroupById($data['categoryId'])->handle;
+                } catch (\Throwable $exception) {
+                    $categoryHandle = '';
+                }
+                if (in_array($categoryHandle, $allowedCategories)) {
+                    $shouldFetch = true;
+                }
+            }
         }
 
         if ($shouldFetch) {

@@ -132,18 +132,21 @@ class Related extends Plugin
 
     protected function settingsHtml(): string
     {
-        $sections = Craft::$app->sections->getAllSections();
-        $categories = Craft::$app->categories->getAllGroups();
+        $sections = Craft::$app->getSections()->getAllSections();
+        $categories = Craft::$app->getCategories()->getAllGroups();
+
         $optionsSections = [];
         $optionsCategories = [];
 
         foreach ($sections as $id => $section) {
             $optionsSections[$section->handle] = $section->name;
         }
+        $optionsSections['nobodyIsGoingToCallASectionThis'] = 'None';
 
         foreach ($categories as $id => $category) {
             $optionsCategories[$category->handle] = $category->name;
         }
+        $optionsCategories['nobodyIsGoingToCallACategoryThis'] = 'None';
 
         return Craft::$app->view->renderTemplate(
             'related/settings',
