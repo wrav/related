@@ -118,7 +118,6 @@ class DefaultController extends Controller
             $response->format = Response::FORMAT_RAW;
 
             return $response;
-
         }
 
         Craft::$app->end();

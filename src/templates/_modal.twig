@@ -16,7 +16,7 @@
                         </thead>
                         {% for item in relations %}
                             {% set title = item.title ?? item.name ?? item.username ?? null %}
-                            {% set status = item.enabled ? 'enabled' : 'dist' %}
+                            {% set status = item.status %}
                             {% set cpEditUrl = item.cpEditUrl ?? '#' %}
 
                             <tr>

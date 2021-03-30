@@ -1,5 +1,15 @@
 # Related Changelog
 
+## 1.1.6 - 2020-03-30
+
+### Updated
+- Thanks to @SHoogland for updating lookup for sections and categories to use handle instead of ID to support the de-sync between different databases. WARNING: You'll may need to reconfigure the plugin settings.
+- Set minimum PHP support to >=7.2.5
+
+### Fixed
+- Changed status icon color to support Entry status colors reported by @terryupton.
+- Hide category options if no categories' setup, fixing UI bug.
+
 ## 1.1.5 - 2020-03-23
 
 ### Added
