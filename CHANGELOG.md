@@ -1,5 +1,11 @@
 # Related Changelog
 
+## 1.2.0 - [Unreleased]
+
+### Added
+
+- Added support for displaying relations on Asset edit pages.
+
 ## 1.1.6 - 2020-03-30
 
 ### Updated
