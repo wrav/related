@@ -62,7 +62,20 @@ class DefaultController extends Controller
         $data = Craft::$app->request->getQueryParams();
         $allowedSections = Related::getInstance()->getSettings()->allowedSections;
         $allowedCategories = Related::getInstance()->getSettings()->allowedCategories;
+        $allowedAssetVolumes = Related::getInstance()->getSettings()->allowedAssetVolumes;
         $shouldFetch = false;
+
+        if(Craft::$app->elements->getElementTypeById($data['id']) === 'craft\elements\Asset') {
+            $asset = Craft::$app->elements->getElementById($data['id']);
+            $volumeId = $asset->volume->id;
+            if(!$allowedAssetVolumes){
+                $shouldFetch = true;
+            } else if (is_array($allowedAssetVolumes)) {
+                if(in_array($volumeId, $allowedAssetVolumes)) {
+                    $shouldFetch = true;
+                }
+            }
+        }
 
         if (!empty($data['sectionId'])) {
             if (!$allowedSections) {

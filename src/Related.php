@@ -97,6 +97,8 @@ class Related extends Plugin
                         || preg_match('/^\/.+\/categories\//', Craft::$app->getRequest()->getUrl())
                         || preg_match('/^\/.+\/users\//', Craft::$app->getRequest()->getUrl())
                         || preg_match('/^\/.+\/myaccount/', Craft::$app->getRequest()->getUrl())
+                        || preg_match('/^\/.+\/assets\//', Craft::$app->getRequest()->getUrl())
+
                     )
                 ) {
                     $url = Craft::$app->assetManager->getPublishedUrl('@wrav/related/assetbundles/related/dist/js/Related.js', true);
