@@ -12,6 +12,7 @@ namespace wrav\related\services;
 
 use craft\base\Element;
 use craft\db\Query;
+use craft\elements\Asset;
 use craft\elements\Category;
 use craft\elements\Entry;
 use craft\elements\User;

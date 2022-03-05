@@ -97,6 +97,8 @@ class Related extends Plugin
                         || preg_match('/^\/.+\/categories\//', Craft::$app->getRequest()->getUrl())
                         || preg_match('/^\/.+\/users\//', Craft::$app->getRequest()->getUrl())
                         || preg_match('/^\/.+\/myaccount/', Craft::$app->getRequest()->getUrl())
+                        || preg_match('/^\/.+\/assets\//', Craft::$app->getRequest()->getUrl())
+
                     )
                 ) {
                     $url = Craft::$app->assetManager->getPublishedUrl('@wrav/related/assetbundles/related/dist/js/Related.js', true);
@@ -134,9 +136,11 @@ class Related extends Plugin
     {
         $sections = Craft::$app->getSections()->getAllSections();
         $categories = Craft::$app->getCategories()->getAllGroups();
+        $assetVolumes = Craft::$app->getVolumes()->getAllVolumes();
 
         $optionsSections = [];
         $optionsCategories = [];
+        $optionsAssetVolumes = [];
 
         foreach ($sections as $id => $section) {
             $optionsSections[$section->handle] = $section->name;
@@ -148,12 +152,18 @@ class Related extends Plugin
         }
         $optionsCategories['nobodyIsGoingToCallACategoryThis'] = 'None';
 
+        foreach ($assetVolumes as $id => $volume) {
+            $optionsAssetVolumes[$volume->handle] = $volume->name;
+        }
+        $optionsAssetVolumes['nobodyIsGoingToCallAnAssetVolumeThis'] = 'None';
+
         return Craft::$app->view->renderTemplate(
             'related/settings',
             [
                 'settings' => $this->getSettings(),
                 'optionsSections' => $optionsSections,
                 'optionsCategories' => $optionsCategories,
+                'optionsAssetVolumes' => $optionsAssetVolumes,
             ]
         );
     }

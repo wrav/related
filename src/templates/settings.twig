@@ -34,3 +34,14 @@
         options: optionsCategories,
     }) }}
 {% endif %}
+
+{% if optionsAssetVolumes|length %}
+    {{ forms.multiselectField({
+        label: "Allowed Asset Volumes"|t,
+        instructions: "Choose which asset volumes the relation widget will show on. Leave blank for all volumes"|t,
+        id: 'allowedAssetVolumes',
+        name: 'allowedAssetVolumes',
+        values: settings['allowedAssetVolumes'],
+        options: optionsAssetVolumes,
+    }) }}
+{% endif %}
