@@ -18,6 +18,7 @@
                             {% set title = item.title ?? item.name ?? item.username ?? null %}
                             {% set status = item.status %}
                             {% set cpEditUrl = item.cpEditUrl ?? '#' %}
+                            {% set frontendUrl = item.url ?? '#' %}
 
                             <tr>
                                 <td>
@@ -40,8 +41,8 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if cpEditUrl %}
-                                        <a href="{{ cpEditUrl }}" rel="noopener" target="_blank" data-icon="world"
+                                    {% if frontendUrl %}
+                                        <a href="{{ frontendUrl }}" rel="noopener" target="_blank" data-icon="world"
                                            title="Visit webpage"></a>
                                     {% endif %}
                                 </td>
