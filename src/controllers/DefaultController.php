@@ -60,13 +60,14 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $data = Craft::$app->request->getQueryParams();
+        $elementId = (int) $data['id'];
         $allowedSections = Related::getInstance()->getSettings()->allowedSections;
         $allowedCategories = Related::getInstance()->getSettings()->allowedCategories;
         $allowedAssetVolumes = Related::getInstance()->getSettings()->allowedAssetVolumes;
         $shouldFetch = false;
 
-        if(Craft::$app->elements->getElementTypeById($data['id']) === 'craft\elements\Asset') {
-            $asset = Craft::$app->elements->getElementById($data['id']);
+        if (Craft::$app->elements->getElementTypeById($elementId) === 'craft\elements\Asset') {
+            $asset = Craft::$app->elements->getElementById($elementId);
             $volumeId = $asset->volume->id;
             if(!$allowedAssetVolumes){
                 $shouldFetch = true;
@@ -82,7 +83,7 @@ class DefaultController extends Controller
                 $shouldFetch = true;
             } else if (is_array($allowedSections)) {
                 try {
-                    $sectionHandle = Craft::$app->getSections()->getSectionById($data['sectionId'])->handle;
+                    $sectionHandle = Craft::$app->getSections()->getSectionById((int) $data['sectionId'])->handle;
                 } catch (\Throwable $exception) {
                     $sectionHandle = '';
                 }
@@ -99,7 +100,7 @@ class DefaultController extends Controller
                 $shouldFetch = true;
             } else if (is_array($allowedCategories)) {
                 try {
-                    $categoryHandle = Craft::$app->getCategories()->getGroupById($data['categoryId'])->handle;
+                    $categoryHandle = Craft::$app->getCategories()->getGroupById((int) $data['categoryId'])->handle;
                 } catch (\Throwable $exception) {
                     $categoryHandle = '';
                 }
@@ -110,7 +111,6 @@ class DefaultController extends Controller
         }
 
         if ($shouldFetch) {
-            $elementId = $data['id'];
             $relations = Related::$plugin->relatedService->getRelated($elementId);
 
             $data = [
