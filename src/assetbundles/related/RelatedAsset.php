@@ -10,7 +10,6 @@
 
 namespace wrav\related\assetbundles\related;
 
-use Craft;
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
