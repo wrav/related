@@ -1,6 +1,11 @@
 # Related Changelog
 
-## 1.2.0 - [Unreleased]
+## 1.2.1 - 2022-05-30
+
+### Fixed
+- Typecast query parameters before getting Craft elements
+
+## 1.2.0 - 2022-03-08
 
 ### Added
 

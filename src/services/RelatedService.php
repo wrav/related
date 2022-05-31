@@ -10,17 +10,15 @@
 
 namespace wrav\related\services;
 
-use craft\base\Element;
-use craft\db\Query;
-use craft\elements\Asset;
-use craft\elements\Category;
-use craft\elements\Entry;
-use craft\elements\User;
-use craft\elements\MatrixBlock;
-use wrav\related\Related;
-
 use Craft;
 use craft\base\Component;
+use craft\base\Element;
+use craft\db\Query;
+use craft\elements\Category;
+use craft\elements\Entry;
+use craft\elements\MatrixBlock;
+use craft\elements\User;
+use wrav\related\Related;
 
 /**
  * RelatedService Service
@@ -63,7 +61,7 @@ class RelatedService extends Component
         $matchingBlocks = [];
         foreach ($blocks as $block) {
             $owner = $block->getOwner();
-            if($owner) {
+            if ($owner) {
                 $matchingBlocks[$owner->id] = $owner;
             }
         }

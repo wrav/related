@@ -10,20 +10,14 @@
 
 namespace wrav\related;
 
-use craft\events\RegisterCpNavItemsEvent;
-use craft\events\RegisterTemplateRootsEvent;
-use craft\events\RegisterUrlRulesEvent;
-use craft\web\twig\variables\Cp;
-use craft\web\UrlManager;
-use craft\web\View;
-use wrav\related\services\RelatedService as RelatedServiceService;
-use wrav\related\models\Settings;
-
 use Craft;
 use craft\base\Plugin;
-use craft\services\Plugins;
 use craft\events\PluginEvent;
-
+use craft\events\RegisterTemplateRootsEvent;
+use craft\services\Plugins;
+use craft\web\View;
+use wrav\related\models\Settings;
+use wrav\related\services\RelatedService as RelatedServiceService;
 use yii\base\Event;
 
 /**
@@ -46,7 +40,6 @@ use yii\base\Event;
  */
 class Related extends Plugin
 {
-
     // Static Properties
     // =========================================================================
 
@@ -80,7 +73,7 @@ class Related extends Plugin
         Event::on(
             Plugins::class,
             Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
+            function(PluginEvent $event) {
                 if ($event->plugin === $this) {
                     // We were just installed
                 }
@@ -110,7 +103,7 @@ class Related extends Plugin
             }
         );
 
-        Event::on(View::class, View::EVENT_REGISTER_SITE_TEMPLATE_ROOTS, function (RegisterTemplateRootsEvent $event) {
+        Event::on(View::class, View::EVENT_REGISTER_SITE_TEMPLATE_ROOTS, function(RegisterTemplateRootsEvent $event) {
             $event->roots['related'] = __DIR__ . '/templates';
         });
 

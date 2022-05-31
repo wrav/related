@@ -10,10 +10,8 @@
 
 namespace wrav\related\models;
 
-use wrav\related\Related;
-
-use Craft;
 use craft\base\Model;
+use wrav\related\Related;
 
 /**
  * Related Settings Model
@@ -48,5 +46,4 @@ class Settings extends Model
      * @var string
      */
     public $allowedAssetVolumes;
-
 }
