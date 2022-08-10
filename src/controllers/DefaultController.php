@@ -54,7 +54,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $data = Craft::$app->request->getQueryParams();
-        $elementId = (int) $data['id'];
+        $elementId = (int)$data['id'];
         $allowedSections = Related::getInstance()->getSettings()->allowedSections;
         $allowedCategories = Related::getInstance()->getSettings()->allowedCategories;
         $allowedAssetVolumes = Related::getInstance()->getSettings()->allowedAssetVolumes;
@@ -71,7 +71,7 @@ class DefaultController extends Controller
                     $sectionId = $element->sectionId;
 
                     try {
-                        $sectionHandle = Craft::$app->getSections()->getSectionById((int) $data['sectionId'])->handle;
+                        $sectionHandle = Craft::$app->getSections()->getSectionById((int)$data['sectionId'])->handle;
                     } catch (\Throwable $exception) {
                         $sectionHandle = '';
                     }
@@ -81,6 +81,15 @@ class DefaultController extends Controller
                 }
                 break;
             case 'craft\elements\Asset':
+                $asset = Craft::$app->elements->getElementById($elementId);
+                $volumeId = $asset->volume->id;
+                if (!$allowedAssetVolumes) {
+                    $shouldFetch = true;
+                } elseif (is_array($allowedAssetVolumes)) {
+                    if (in_array($volumeId, $allowedAssetVolumes)) {
+                        $shouldFetch = true;
+                    }
+                }
                 break;
             case 'craft\elements\User':
                 $shouldFetch = true;
@@ -90,7 +99,7 @@ class DefaultController extends Controller
                     $shouldFetch = true;
                 } elseif (is_array($allowedCategories)) {
                     try {
-                        $categoryHandle = Craft::$app->getCategories()->getGroupById((int) $data['categoryId'])->handle;
+                        $categoryHandle = Craft::$app->getCategories()->getGroupById((int)$data['categoryId'])->handle;
                     } catch (\Throwable $exception) {
                         $categoryHandle = '';
                     }
@@ -99,18 +108,6 @@ class DefaultController extends Controller
                     }
                 }
                 break;
-        }
-
-        if (Craft::$app->elements->getElementTypeById($elementId) === 'craft\elements\Asset') {
-            $asset = Craft::$app->elements->getElementById($elementId);
-            $volumeId = $asset->volume->id;
-            if (!$allowedAssetVolumes) {
-                $shouldFetch = true;
-            } elseif (is_array($allowedAssetVolumes)) {
-                if (in_array($volumeId, $allowedAssetVolumes)) {
-                    $shouldFetch = true;
-                }
-            }
         }
 
         if ($shouldFetch) {
