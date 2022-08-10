@@ -73,6 +73,8 @@ class RelatedService extends Component
         /** @var Element[] $entries */
         $entries = $query->all();
 
+//        dd($entries);
+
         /** @var Query $query */
         $query = Category::find();
         $query->relatedTo = $element;
@@ -87,15 +89,24 @@ class RelatedService extends Component
         /** @var Element[] $users */
         $users = $query->all();
 
+        /** @var Query $query */
+        $query = User::find();
+        $query->relatedTo = $element;
+        $query->anyStatus();
+        /** @var Element[] $users */
+        $users = $query->all();
+
         $elements = array_merge(
             $entries,
             $categories,
             $users,
         );
 
-        return array_merge(
-            $matchingBlocks,
-            $elements
-        );
+        return collect(
+            array_merge(
+                $matchingBlocks,
+                $elements
+            )
+        )->unique('id')->toArray();
     }
 }
