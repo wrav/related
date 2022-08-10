@@ -14,7 +14,9 @@ use Craft;
 use craft\base\Plugin;
 use craft\events\PluginEvent;
 use craft\events\RegisterTemplateRootsEvent;
+use craft\events\RegisterUrlRulesEvent;
 use craft\services\Plugins;
+use craft\web\UrlManager;
 use craft\web\View;
 use wrav\related\models\Settings;
 use wrav\related\services\RelatedService as RelatedServiceService;
@@ -77,6 +79,14 @@ class Related extends Plugin
                 if ($event->plugin === $this) {
                     // We were just installed
                 }
+            }
+        );
+
+        Event::on(
+            UrlManager::class,
+            UrlManager::EVENT_REGISTER_CP_URL_RULES,
+            function(RegisterUrlRulesEvent $event) {
+                $event->rules['related/default'] = 'related/default';
             }
         );
 

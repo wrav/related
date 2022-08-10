@@ -1,5 +1,10 @@
 # Related Changelog
 
+## 2.0.0 - 2022-08-10
+
+### Updated
+- Updated plugin to support Craft v4
+
 ## 1.2.1 - 2022-05-30
 
 ### Fixed
