@@ -73,8 +73,6 @@ class RelatedService extends Component
         /** @var Element[] $entries */
         $entries = $query->all();
 
-//        dd($entries);
-
         /** @var Query $query */
         $query = Category::find();
         $query->relatedTo = $element;
@@ -96,10 +94,23 @@ class RelatedService extends Component
         /** @var Element[] $users */
         $users = $query->all();
 
+        $products = [];
+        try {
+            if (class_exists('craft\commerce\elements\Product')) {
+                $query = craft\commerce\elements\Product::find();
+                $query->relatedTo = $element;
+                $query->anyStatus();
+                $products = $query->all();
+            }
+        } catch (\Exception $exception) {
+            // Add logging in the future
+        }
+
         $elements = array_merge(
             $entries,
             $categories,
             $users,
+            $products,
         );
 
         return collect(

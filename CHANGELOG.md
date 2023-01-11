@@ -1,5 +1,10 @@
 # Related Changelog
 
+## 2.0.1 - 2023-01-11
+
+### Updated
+- Updated to support Craft Commerce / Products, thanks @matt-adigital
+
 ## 2.0.0 - 2022-08-10
 
 ### Updated
