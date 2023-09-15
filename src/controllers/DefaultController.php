@@ -46,7 +46,7 @@ class DefaultController extends Controller
      *         The actions must be in 'kebab-case'
      * @access protected
      */
-    protected $allowAnonymous = ['index', 'do-something'];
+    protected array|int|bool $allowAnonymous = false; // Requires login to prevent data leakage
 
     // Public Methods
     // =========================================================================
@@ -54,54 +54,60 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $data = Craft::$app->request->getQueryParams();
-        $elementId = (int) $data['id'];
+        $elementId = (int)$data['id'];
         $allowedSections = Related::getInstance()->getSettings()->allowedSections;
         $allowedCategories = Related::getInstance()->getSettings()->allowedCategories;
         $allowedAssetVolumes = Related::getInstance()->getSettings()->allowedAssetVolumes;
         $shouldFetch = false;
 
-        if (Craft::$app->elements->getElementTypeById($elementId) === 'craft\elements\Asset') {
-            $asset = Craft::$app->elements->getElementById($elementId);
-            $volumeId = $asset->volume->id;
-            if (!$allowedAssetVolumes) {
-                $shouldFetch = true;
-            } elseif (is_array($allowedAssetVolumes)) {
-                if (in_array($volumeId, $allowedAssetVolumes)) {
-                    $shouldFetch = true;
-                }
-            }
-        }
+        $element = Craft::$app->elements->getElementById($elementId);
+        $elementType = Craft::$app->elements->getElementTypeById($elementId);
 
-        if (!empty($data['sectionId'])) {
-            if (!$allowedSections) {
-                $shouldFetch = true;
-            } elseif (is_array($allowedSections)) {
-                try {
-                    $sectionHandle = Craft::$app->getSections()->getSectionById((int) $data['sectionId'])->handle;
-                } catch (\Throwable $exception) {
-                    $sectionHandle = '';
-                }
-                if (in_array($sectionHandle, $allowedSections)) {
+        switch ($elementType) {
+            case 'craft\elements\Entry':
+                if (!$allowedSections) {
                     $shouldFetch = true;
+                } elseif (is_array($allowedSections)) {
+                    $sectionId = $element->sectionId;
+
+                    try {
+                        $sectionHandle = Craft::$app->getSections()->getSectionById((int)$data['sectionId'])->handle;
+                    } catch (\Throwable $exception) {
+                        $sectionHandle = '';
+                    }
+                    if (in_array($sectionHandle, $allowedSections)) {
+                        $shouldFetch = true;
+                    }
                 }
-            }
-        }
-        if (!empty($data['userId'])) {
-            $shouldFetch = true;
-        }
-        if (!empty($data['categoryId'])) {
-            if (!$allowedCategories) {
-                $shouldFetch = true;
-            } elseif (is_array($allowedCategories)) {
-                try {
-                    $categoryHandle = Craft::$app->getCategories()->getGroupById((int) $data['categoryId'])->handle;
-                } catch (\Throwable $exception) {
-                    $categoryHandle = '';
-                }
-                if (in_array($categoryHandle, $allowedCategories)) {
+                break;
+            case 'craft\elements\Asset':
+                $asset = Craft::$app->elements->getElementById($elementId);
+                $volumeId = $asset->volume->id;
+                if (!$allowedAssetVolumes) {
                     $shouldFetch = true;
+                } elseif (is_array($allowedAssetVolumes)) {
+                    if (in_array($volumeId, $allowedAssetVolumes)) {
+                        $shouldFetch = true;
+                    }
                 }
-            }
+                break;
+            case 'craft\elements\User':
+                $shouldFetch = true;
+                break;
+            case 'craft\elements\Category':
+                if (!$allowedCategories) {
+                    $shouldFetch = true;
+                } elseif (is_array($allowedCategories)) {
+                    try {
+                        $categoryHandle = Craft::$app->getCategories()->getGroupById((int)$data['categoryId'])->handle;
+                    } catch (\Throwable $exception) {
+                        $categoryHandle = '';
+                    }
+                    if (in_array($categoryHandle, $allowedCategories)) {
+                        $shouldFetch = true;
+                    }
+                }
+                break;
         }
 
         if ($shouldFetch) {
@@ -117,15 +123,18 @@ class DefaultController extends Controller
                 ),
             ];
 
-            $response = Craft::$app->getResponse();
-            $formatter = new JsonResponseFormatter();
-            $response->data = $data;
-            $formatter->format($response);
-            $response->data = null;
-            $response->format = Response::FORMAT_RAW;
-
-            return $response;
+            return $this->asJson($data);
         }
+
+        return $this->asJson([
+            'count' => 0,
+            'view' => Craft::$app->view->renderTemplate(
+                'related/_modal',
+                [
+                    'relations' => [],
+                ]
+            ),
+        ]);
 
         Craft::$app->end();
     }

@@ -87,15 +87,37 @@ class RelatedService extends Component
         /** @var Element[] $users */
         $users = $query->all();
 
+        /** @var Query $query */
+        $query = User::find();
+        $query->relatedTo = $element;
+        $query->anyStatus();
+        /** @var Element[] $users */
+        $users = $query->all();
+
+        $products = [];
+        try {
+            if (class_exists('craft\commerce\elements\Product')) {
+                $query = craft\commerce\elements\Product::find();
+                $query->relatedTo = $element;
+                $query->anyStatus();
+                $products = $query->all();
+            }
+        } catch (\Exception $exception) {
+            // Add logging in the future
+        }
+
         $elements = array_merge(
             $entries,
             $categories,
             $users,
+            $products,
         );
 
-        return array_merge(
-            $matchingBlocks,
-            $elements
-        );
+        return collect(
+            array_merge(
+                $matchingBlocks,
+                $elements
+            )
+        )->unique('id')->toArray();
     }
 }
