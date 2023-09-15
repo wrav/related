@@ -46,4 +46,9 @@ class Settings extends Model
      * @var string
      */
     public $allowedAssetVolumes;
+
+    /**
+     * @var string
+     */
+    public $selectedSite;
 }
