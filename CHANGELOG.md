@@ -1,5 +1,11 @@
 # Related Changelog
 
+## 2.1.0 - 2023-09-15
+
+### Updated
+- Pointed API url to actionTrigger to support non-superuser access, thanks @Eviltoastey for the issue #23
+- Locked down API controller to only allow users to access it to prevent data leakage
+
 ## 2.0.1 - 2023-01-11
 
 ### Updated
