@@ -137,13 +137,26 @@ class Related extends Plugin
 
     protected function settingsHtml(): string
     {
+        // Fetch the available sites
+        $sites = Craft::$app->sites->getAllSites();
+        
+        // Fetch other data you need (sections, categories, asset volumes)
         $sections = Craft::$app->getSections()->getAllSections();
         $categories = Craft::$app->getCategories()->getAllGroups();
         $assetVolumes = Craft::$app->getVolumes()->getAllVolumes();
 
+        // Prepare options arrays
         $optionsSections = [];
         $optionsCategories = [];
         $optionsAssetVolumes = [];
+        $siteOptions = [];
+
+        $siteOptions['*'] = 'All Sites';
+
+        foreach ($sites as $site) {
+            // Populate site options with site ID as the value and site name as the label
+            $siteOptions[$site->id] = $site->name;
+        }
 
         foreach ($sections as $id => $section) {
             $optionsSections[$section->handle] = $section->name;
@@ -167,6 +180,7 @@ class Related extends Plugin
                 'optionsSections' => $optionsSections,
                 'optionsCategories' => $optionsCategories,
                 'optionsAssetVolumes' => $optionsAssetVolumes,
+                'siteOptions' => $siteOptions,
             ]
         );
     }

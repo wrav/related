@@ -1,5 +1,10 @@
 # Related Changelog
 
+## 2.1.1 - 2023-09-15
+
+### Updated
+- Add scope to all sites or a selected site, thanks @OscarBarrett for the issue #20 
+
 ## 2.1.0 - 2023-09-15
 
 ### Updated

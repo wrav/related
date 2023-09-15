@@ -15,6 +15,15 @@
 
 {% import "_includes/forms" as forms %}
 
+{{ forms.selectField({
+    label: "Select Site"|t,
+    instructions: "Choose a site"|t,
+    id: 'selectedSite',
+    name: 'selectedSite',
+    options: siteOptions,
+    value: settings['selectedSite'] ?? null,
+}) }}
+
 {{ forms.multiselectField({
     label: "Allowed Sections"|t,
     instructions: "Choose which sections the relation widget will show on. Leave blank for all sections"|t,
